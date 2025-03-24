@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آپ کا عید مبارک گفٹ تیار ہے</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="neon-text">عید مبارک</h1>
+        <p id="relationMessage" class="normal-text"></p>
+        <h2 id="senderName" class="neon-text name-style"></h2>
+        <p id="senderMessage" class="normal-text"></p>
+        <button onclick="downloadApp()">ڈاؤن لوڈ کریں</button>
+    </div>
+
+    <script>
+        // لوکل سٹوریج سے ڈیٹا لوڈ کرنا
+        let relation = localStorage.getItem("relation");
+        let senderName = localStorage.getItem("name");
+
+        // ڈیٹا سیٹ کرنا
+        document.getElementById("relationMessage").innerText = relation;
+        document.getElementById("senderName").innerText = senderName;
+        document.getElementById("senderMessage").innerText = "کی طرف سے عید الفطر مبارک ہو";
+
+        // ڈاؤن لوڈ بٹن فنکشن
+        function downloadApp() {
+            alert("یہاں ایپلیکیشن ڈاؤن لوڈ کرنے کی لنک آئے گی!");
+        }
+    </script>
+</body>
+</html>

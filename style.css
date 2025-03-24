@@ -1,0 +1,61 @@
+/* پوری ویب سائٹ کا بیک گراؤنڈ اور فونٹ سیٹنگ */
+body {
+    background-color: black;
+    color: white;
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* کنٹینر جو سب کچھ سنٹر میں رکھے گا */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+/* نیون لائٹ ٹیکسٹ کے لیے */
+.neon-text {
+    font-size: 36px;
+    font-weight: bold;
+    color: #00ff00; /* گرین نیون */
+    text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 20px #00ff00;
+    text-align: center;
+    margin: 10px 0;
+}
+
+/* نیون لائٹ نام کے لیے */
+.name-style {
+    font-size: 30px;
+    color: #ff0000; /* ریڈ نیون */
+    text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000, 0 0 20px #ff0000;
+}
+
+/* نارمل ٹیکسٹ کے لیے */
+.normal-text {
+    font-size: 24px;
+    color: white;
+    text-align: center;
+}
+
+/* بٹن کا سٹائل */
+button {
+    background-color: #ffcc00;
+    color: black;
+    font-size: 18px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    box-shadow: 0 0 10px #ffcc00;
+    transition: all 0.3s ease-in-out;
+}
+
+button:hover {
+    background-color: #ffaa00;
+    box-shadow: 0 0 20px #ffaa00;
+}

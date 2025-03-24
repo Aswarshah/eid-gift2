@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>میسج بنائیں</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>اپنے پیارے کے لیے عید مبارک کا پیغام بنائیں</h2>
+        <input type="text" id="nameInput" placeholder="اپنا نام لکھیں">
+        <div class="buttons">
+            <button onclick="setRelation('میرے پیارے بھائی کو')">بھائی</button>
+            <button onclick="setRelation('میری پیاری بہن کو')">بہن</button>
+            <button onclick="setRelation('میری پیاری امی کو')">امی</button>
+            <button onclick="setRelation('میرے پیارے ابو کو')">ابو</button>
+            <button onclick="setRelation('میرے پیارے دوست کو')">دوست</button>
+            <button onclick="setRelation('میرے پیارے کزن کو')">کزن</button>
+        </div>
+        <button onclick="sendMessage()">سینڈ</button>
+    </div>
+
+    <script>
+        let relation = "";
+
+        function setRelation(selectedRelation) {
+            relation = selectedRelation;
+        }
+
+        function sendMessage() {
+            let name = document.getElementById("nameInput").value;
+            if (name === "" || relation === "") {
+                alert("براہ کرم اپنا نام اور رشتہ منتخب کریں");
+                return;
+            }
+            localStorage.setItem("relation", relation);
+            localStorage.setItem("name", name);
+            window.location.href = "send.html";
+        }
+    </script>
+</body>
+</html>
