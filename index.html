@@ -1,85 +1,18 @@
 <!DOCTYPE html>
 <html lang="ur">
 <head>
-    <script type="module" src="firebase.js"></script>
-    <input type="text" id="messageInput" placeholder="اپنا عید میسج لکھیں">
-<button onclick="sendMessage()">Send</button>
-    <script type="module">
-  import { addGreetingMessage } from "./firebase.js";
-  
-  window.sendMessage = function () {
-    const message = document.getElementById("messageInput").value;
-    if (message.trim() !== "") {
-      addGreetingMessage(message);
-      alert("آپ کا عید میسج محفوظ ہو گیا!");
-    } else {
-      alert("براہ کرم کوئی میسج لکھیں!");
-    }
-  };
-</script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عید مبارک</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>عید مبارک - خوش آمدید</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-    <!-- Firebase SDK -->
-<script type="module">
-  // Import the functions you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-  // Firebase configuration (یہاں اپنی فائر بیس کنفیگریشن ڈالنی ہے)
-  const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  // Example Function: Add Data to Firestore
-  async function saveMessage(user, message) {
-    try {
-      const docRef = await addDoc(collection(db, "messages"), {
-        name: user,
-        text: message,
-        timestamp: new Date()
-      });
-      console.log("Document written with ID: ", docRef.id);
-    } catch (error) {
-      console.error("Error adding document: ", error);
-    }
-  }
-
-  // Example Usage (تم اپنی HTML سے اس کو کال کر سکتے ہو)
-  saveMessage("Ali", "Eid Mubarak!");
-    
-</script>
 <body>
-    <div class="container">
-        <h1 class="neon-text">عید مبارک</h1>
-        <p class="message">میرے پیارے دوست کو</p>
-        <p class="sender">سید اسوار شاہ کی طرف سے عید الفطر مبارک ہو</p>
-        <button onclick="nextPage()">اپنے مزید کسی دوست کو سینڈ کرنے کے لیے یہاں کلک کریں</button>
-    </div>
-
-    const firebaseConfig = {
-  apiKey: "AIzaSyCWxGEAYSmqUFXhC-5yp-Y8PtGKHQ_oxFM",
-  authDomain: "eid-gift-fe0f6.firebaseapp.com",
-  projectId: "eid-gift-fe0f6",
-  storageBucket: "eid-gift-fe0f6.firebasestorage.app",
-  messagingSenderId: "464963301865",
-  appId: "1:464963301865:web:7ec0ae86fd310e09efdb78"
-};
-    <script>
-        function nextPage() {
-            window.location.href = "message.html";
-        }
-    </script>
+  <div class="container">
+    <h1 class="neon-text">عید مبارک</h1>
+    <p>خوش آمدید! اپنی کسٹمائزڈ عید مبارک میسج بنانے کے لیے نیچے دیے گئے بٹن پر کلک کریں۔</p>
+    <button onclick="window.location.href='customize.html'">
+      اپنے کسی دوست کو سینڈ کرنے کے لیے یہاں کلک کریں
+    </button>
+  </div>
 </body>
 </html>
