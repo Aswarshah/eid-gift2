@@ -1,35 +1,23 @@
 <!DOCTYPE html>
 <html lang="ur">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>آپ کا عید گفٹ لنک</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>آپ کا عید گفٹ لنک</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="firebase.js"></script>
+  <script type="module" src="script.js" defer></script>
 </head>
-<body>
-    <h2>آپ کا عید گفٹ لنک تیار ہے!</h2>
-    
-    <input type="text" id="generatedLink" readonly>
-    <button onclick="copyLink()">لنک کاپی کریں</button>
-
-    <script>
-        function getQueryParam(name) {
-            const params = new URLSearchParams(window.location.search);
-            return params.get(name);
-        }
-
-        function copyLink() {
-            var copyText = document.getElementById("generatedLink");
-            copyText.select();
-            document.execCommand("copy");
-            alert("لنک کاپی ہوگیا!");
-        }
-
-        // Firebase ID کے ساتھ لنک شو کرنا
-        const linkId = getQueryParam("id");
-        if (linkId) {
-            const newLink = `https://aswarshah.github.io/eid-gift2/?id=${linkId}`;
-            document.getElementById("generatedLink").value = newLink;
-        }
-    </script>
+<body onload="loadGeneratedMessage()">
+  <div class="container">
+    <h2 id="finalMessage">آپ کا کسٹمائزڈ میسج یہاں آئے گا</h2>
+    <div id="linkContainer" style="display: none;">
+      <input type="text" id="generatedLink" readonly placeholder="یہاں لنک ظاہر ہوگا">
+      <button onclick="copyLink()">لنک کاپی کریں</button>
+    </div>
+    <button onclick="window.location.href='customize.html'">
+      اپنے کسی اور دوست کو سینڈ کرنے کے لیے یہاں کلک کریں
+    </button>
+  </div>
 </body>
 </html>
