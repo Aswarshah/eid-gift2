@@ -1,83 +1,61 @@
-function nextPage() {
-    window.location.href = "message.html";
-}
+import { db } from "./firebase.js";
+import { collection, addDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-function convertToUrdu(name) {
-    return name.replace(/a/g, 'ا').replace(/b/g, 'ب').replace(/c/g, 'ک').replace(/d/g, 'د')
-               .replace(/e/g, 'ے').replace(/f/g, 'ف').replace(/g/g, 'گ').replace(/h/g, 'ح')
-               .replace(/i/g, 'ی').replace(/j/g, 'ج').replace(/k/g, 'ک').replace(/l/g, 'ل')
-               .replace(/m/g, 'م').replace(/n/g, 'ن').replace(/o/g, 'و').replace(/p/g, 'پ')
-               .replace(/q/g, 'ق').replace(/r/g, 'ر').replace(/s/g, 'س').replace(/t/g, 'ت')
-               .replace(/u/g, 'و').replace(/v/g, 'و').replace(/w/g, 'و').replace(/x/g, 'کس')
-               .replace(/y/g, 'ی').replace(/z/g, 'ز');
-}
-// Firebase میں ڈیٹا سیو ہونے کے بعد یوزر کو لنک والے پیج پر بھیجنا
-docRef.then((doc) => {
-    window.location.href = `generated-link.html?id=${doc.id}`;
+// کسٹمائزیشن پیج پر "میسج سینڈ کریں" بٹن کا ایونٹ ہینڈلر
+document.getElementById("generateButton")?.addEventListener("click", async function () {
+  const sender = document.getElementById("senderName").value.trim();
+  const recipient = document.getElementById("recipientName").value.trim();
+  const relation = document.getElementById("relation").value;
+  if (sender === "" || recipient === "") {
+    alert("براہ کرم دونوں نام درج کریں!");
+    return;
+  }
+  try {
+    // Firebase Firestore میں ڈیٹا سیو کریں
+    const docRef = await addDoc(collection(db, "eidGreetings"), {
+      sender: sender,
+      recipient: recipient,
+      relation: relation,
+      timestamp: new Date()
+    });
+    // نیا لنک جنریٹ کریں اور فائنل پیج پر ری ڈائریکٹ کریں
+    window.location.href = `generated-link.html?id=${docRef.id}`;
+  } catch (error) {
+    console.error("Error adding document: ", error);
+  }
 });
 
-function generateMessage() {
-    var name = document.getElementById("friendName").value.trim();
-    var relation = document.getElementById("relation").value;
-
-    if (name === "") {
-        alert("براہ کرم نام درج کریں!");
-        return;
+// فائنل پیج پر ڈیٹا لوڈ کرنے کا فنکشن
+async function loadGeneratedMessage() {
+  const params = new URLSearchParams(window.location.search);
+  const docId = params.get("id");
+  if (docId) {
+    const docRef = doc(db, "eidGreetings", docId);
+    try {
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        // کسٹمائزڈ میسج تیار کریں
+        document.getElementById("finalMessage").innerHTML =
+          `عید مبارک<br>میرے پیارے ${data.relation} کو<br>${data.recipient} کی طرف سے<br>${data.sender} کی طرف سے عید الفطر مبارک ہو!`;
+        // یونیک لنک تیار کریں
+        const newLink = `${window.location.origin}/generated-link.html?id=${docId}`;
+        document.getElementById("generatedLink").value = newLink;
+        document.getElementById("linkContainer").style.display = "block";
+      } else {
+        document.getElementById("finalMessage").innerText = "کوئی ڈیٹا نہیں ملا!";
+      }
+    } catch (error) {
+      console.error("Error getting document: ", error);
     }
-
-    var urduName = convertToUrdu(name);
-
-    var message = {
-        name: `عید مبارک ${urduName}`,
-        greeting: `کی طرف سے میرے پیارے ${relation} کو عید الفطر مبارک ہو!`
-    };
-
-    localStorage.setItem("finalMessage", JSON.stringify(message));
-    window.location.href = "message.html";
+  }
 }
+window.loadGeneratedMessage = loadGeneratedMessage;
 
-window.onload = function() {
-    var finalMessage = localStorage.getItem("finalMessage");
-    if (finalMessage) {
-        var msg = JSON.parse(finalMessage);
-        document.getElementById("nameMessage").innerText = msg.name;
-        setTimeout(() => {
-            document.getElementById("greetingMessage").innerText = msg.greeting;
-        }, 2000);
-    }
+// لنک کاپی کرنے کا فنکشن
+window.copyLink = function() {
+  const copyText = document.getElementById("generatedLink");
+  copyText.select();
+  document.execCommand("copy");
+  alert("لنک کاپی ہو گیا!");
 };
-
-// Firebase Configuration
-const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
-};
-
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-
-// Function to Generate and Save Link
-document.getElementById("shareButton").addEventListener("click", function() {
-    let eidMessage = document.getElementById("eidMessage").innerText;
-    let newDocRef = db.collection("eidMessages").doc(); 
-    let generatedLink = window.location.origin + "/send.html?id=" + newDocRef.id;
-
-    newDocRef.set({ message: eidMessage })
-    .then(() => {
-        window.location.href = generatedLink; 
-    })
-    .catch(error => console.error("Error saving message: ", error));
-});
-
-// Copy Link Function
-document.getElementById("copyLinkButton").addEventListener("click", function() {
-    let copyText = document.getElementById("generatedLink");
-    copyText.select();
-    document.execCommand("copy");
-    alert("لنک کاپی ہو گیا!");
-});
