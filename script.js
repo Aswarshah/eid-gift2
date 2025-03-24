@@ -11,6 +11,10 @@ function convertToUrdu(name) {
                .replace(/u/g, 'و').replace(/v/g, 'و').replace(/w/g, 'و').replace(/x/g, 'کس')
                .replace(/y/g, 'ی').replace(/z/g, 'ز');
 }
+// Firebase میں ڈیٹا سیو ہونے کے بعد یوزر کو لنک والے پیج پر بھیجنا
+docRef.then((doc) => {
+    window.location.href = `generated-link.html?id=${doc.id}`;
+});
 
 function generateMessage() {
     var name = document.getElementById("friendName").value.trim();
