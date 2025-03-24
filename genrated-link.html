@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آپ کا عید گفٹ لنک</title>
+</head>
+<body>
+    <h2>آپ کا عید گفٹ لنک تیار ہے!</h2>
+    
+    <input type="text" id="generatedLink" readonly>
+    <button onclick="copyLink()">لنک کاپی کریں</button>
+
+    <script>
+        function getQueryParam(name) {
+            const params = new URLSearchParams(window.location.search);
+            return params.get(name);
+        }
+
+        function copyLink() {
+            var copyText = document.getElementById("generatedLink");
+            copyText.select();
+            document.execCommand("copy");
+            alert("لنک کاپی ہوگیا!");
+        }
+
+        // Firebase ID کے ساتھ لنک شو کرنا
+        const linkId = getQueryParam("id");
+        if (linkId) {
+            const newLink = `https://aswarshah.github.io/eid-gift2/?id=${linkId}`;
+            document.getElementById("generatedLink").value = newLink;
+        }
+    </script>
+</body>
+</html>
